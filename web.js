@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+require('dotenv').config();
 const port = 8000;
 const cookieParser = require('cookie-parser');
+const testRouter = require('./server/routers/test.js');
+const errorMiddleware = require('./server/utils/errorMiddleware');
 // const multer = require('multer'); //파일 업로드
 
 
@@ -18,6 +21,10 @@ app.use(express.json());
 var cors = require('cors');
 app.use(cors());
 
+
+app.use('/api/test', testRouter);
+
+app.use(errorMiddleware);
 
 
 app.use(express.static(path.join(__dirname, '/client/build')));
